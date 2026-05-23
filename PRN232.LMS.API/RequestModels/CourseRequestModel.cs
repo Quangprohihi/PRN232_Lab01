@@ -10,5 +10,9 @@ public class CourseRequestModel
 
     [Required]
     [Range(1, int.MaxValue)]
+    public int SubjectId { get; set; }
+
+    [Required]
+    [Range(1, int.MaxValue)]
     public int SemesterId { get; set; }
 }

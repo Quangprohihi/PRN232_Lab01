@@ -23,7 +23,9 @@ public class CoursesController : ControllerBase
         {
             ["courseId"] = course => course.CourseId,
             ["courseName"] = course => course.CourseName,
+            ["subjectId"] = course => course.SubjectId,
             ["semesterId"] = course => course.SemesterId,
+            ["subject"] = course => course.Subject,
             ["semester"] = course => course.Semester
         };
 
@@ -94,6 +96,7 @@ public class CoursesController : ControllerBase
         var createdCourse = await _courseService.CreateCourseAsync(new CourseBusinessModel
         {
             CourseName = request.CourseName,
+            SubjectId = request.SubjectId,
             SemesterId = request.SemesterId
         });
 
@@ -112,8 +115,21 @@ public class CoursesController : ControllerBase
         {
             CourseId = course.CourseId,
             CourseName = course.CourseName,
+            SubjectId = course.SubjectId,
             SemesterId = course.SemesterId,
+            Subject = course.Subject is null ? null : MapSubject(course.Subject),
             Semester = course.Semester is null ? null : MapSemester(course.Semester)
+        };
+    }
+
+    private static SubjectResponseModel MapSubject(SubjectBusinessModel subject)
+    {
+        return new SubjectResponseModel
+        {
+            SubjectId = subject.SubjectId,
+            SubjectCode = subject.SubjectCode,
+            SubjectName = subject.SubjectName,
+            Credits = subject.Credits
         };
     }
 

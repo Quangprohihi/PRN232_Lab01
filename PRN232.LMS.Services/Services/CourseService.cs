@@ -65,6 +65,7 @@ public class CourseService : ICourseService
         var createdCourse = await _courseRepository.AddAsync(new Course
         {
             CourseName = course.CourseName,
+            SubjectId = course.SubjectId,
             SemesterId = course.SemesterId
         });
 
@@ -75,6 +76,11 @@ public class CourseService : ICourseService
         IQueryable<Course> query,
         ISet<string> expands)
     {
+        if (expands.Contains("subject"))
+        {
+            query = query.Include(course => course.Subject);
+        }
+
         if (expands.Contains("semester"))
         {
             query = query.Include(course => course.Semester);
@@ -101,6 +107,9 @@ public class CourseService : ICourseService
     {
         return sortBy switch
         {
+            "subjectId" => sortDescending
+                ? query.OrderByDescending(course => course.SubjectId)
+                : query.OrderBy(course => course.SubjectId),
             "semesterId" => sortDescending
                 ? query.OrderByDescending(course => course.SemesterId)
                 : query.OrderBy(course => course.SemesterId),
@@ -124,6 +133,7 @@ public class CourseService : ICourseService
         return sortBy switch
         {
             "courseName" => (sortBy, sortDescending),
+            "subjectId" => (sortBy, sortDescending),
             "semesterId" => (sortBy, sortDescending),
             _ => ("courseName", false)
         };
@@ -145,10 +155,25 @@ public class CourseService : ICourseService
         {
             CourseId = course.CourseId,
             CourseName = course.CourseName,
+            SubjectId = course.SubjectId,
             SemesterId = course.SemesterId,
+            Subject = expands.Contains("subject") && course.Subject is not null
+                ? MapSubject(course.Subject)
+                : null,
             Semester = expands.Contains("semester") && course.Semester is not null
                 ? MapSemester(course.Semester)
                 : null
+        };
+    }
+
+    private static SubjectBusinessModel MapSubject(Subject subject)
+    {
+        return new SubjectBusinessModel
+        {
+            SubjectId = subject.SubjectId,
+            SubjectCode = subject.SubjectCode,
+            SubjectName = subject.SubjectName,
+            Credits = subject.Credit
         };
     }
 

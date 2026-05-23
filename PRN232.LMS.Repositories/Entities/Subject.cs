@@ -18,4 +18,6 @@ public class Subject
     public string SubjectName { get; set; } = string.Empty;
 
     public int Credit { get; set; }
+
+    public ICollection<Course> Courses { get; set; } = new List<Course>();
 }

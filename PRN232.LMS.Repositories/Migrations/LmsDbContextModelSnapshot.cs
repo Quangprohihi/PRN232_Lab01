@@ -38,9 +38,14 @@ namespace PRN232.LMS.Repositories.Migrations
                     b.Property<int>("SemesterId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("integer");
+
                     b.HasKey("CourseId");
 
                     b.HasIndex("SemesterId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Courses");
 
@@ -49,121 +54,141 @@ namespace PRN232.LMS.Repositories.Migrations
                         {
                             CourseId = 1,
                             CourseName = "Course 1",
-                            SemesterId = 1
+                            SemesterId = 1,
+                            SubjectId = 1
                         },
                         new
                         {
                             CourseId = 2,
                             CourseName = "Course 2",
-                            SemesterId = 2
+                            SemesterId = 2,
+                            SubjectId = 2
                         },
                         new
                         {
                             CourseId = 3,
                             CourseName = "Course 3",
-                            SemesterId = 3
+                            SemesterId = 3,
+                            SubjectId = 3
                         },
                         new
                         {
                             CourseId = 4,
                             CourseName = "Course 4",
-                            SemesterId = 4
+                            SemesterId = 4,
+                            SubjectId = 4
                         },
                         new
                         {
                             CourseId = 5,
                             CourseName = "Course 5",
-                            SemesterId = 5
+                            SemesterId = 5,
+                            SubjectId = 5
                         },
                         new
                         {
                             CourseId = 6,
                             CourseName = "Course 6",
-                            SemesterId = 1
+                            SemesterId = 1,
+                            SubjectId = 6
                         },
                         new
                         {
                             CourseId = 7,
                             CourseName = "Course 7",
-                            SemesterId = 2
+                            SemesterId = 2,
+                            SubjectId = 7
                         },
                         new
                         {
                             CourseId = 8,
                             CourseName = "Course 8",
-                            SemesterId = 3
+                            SemesterId = 3,
+                            SubjectId = 8
                         },
                         new
                         {
                             CourseId = 9,
                             CourseName = "Course 9",
-                            SemesterId = 4
+                            SemesterId = 4,
+                            SubjectId = 9
                         },
                         new
                         {
                             CourseId = 10,
                             CourseName = "Course 10",
-                            SemesterId = 5
+                            SemesterId = 5,
+                            SubjectId = 10
                         },
                         new
                         {
                             CourseId = 11,
                             CourseName = "Course 11",
-                            SemesterId = 1
+                            SemesterId = 1,
+                            SubjectId = 1
                         },
                         new
                         {
                             CourseId = 12,
                             CourseName = "Course 12",
-                            SemesterId = 2
+                            SemesterId = 2,
+                            SubjectId = 2
                         },
                         new
                         {
                             CourseId = 13,
                             CourseName = "Course 13",
-                            SemesterId = 3
+                            SemesterId = 3,
+                            SubjectId = 3
                         },
                         new
                         {
                             CourseId = 14,
                             CourseName = "Course 14",
-                            SemesterId = 4
+                            SemesterId = 4,
+                            SubjectId = 4
                         },
                         new
                         {
                             CourseId = 15,
                             CourseName = "Course 15",
-                            SemesterId = 5
+                            SemesterId = 5,
+                            SubjectId = 5
                         },
                         new
                         {
                             CourseId = 16,
                             CourseName = "Course 16",
-                            SemesterId = 1
+                            SemesterId = 1,
+                            SubjectId = 6
                         },
                         new
                         {
                             CourseId = 17,
                             CourseName = "Course 17",
-                            SemesterId = 2
+                            SemesterId = 2,
+                            SubjectId = 7
                         },
                         new
                         {
                             CourseId = 18,
                             CourseName = "Course 18",
-                            SemesterId = 3
+                            SemesterId = 3,
+                            SubjectId = 8
                         },
                         new
                         {
                             CourseId = 19,
                             CourseName = "Course 19",
-                            SemesterId = 4
+                            SemesterId = 4,
+                            SubjectId = 9
                         },
                         new
                         {
                             CourseId = 20,
                             CourseName = "Course 20",
-                            SemesterId = 5
+                            SemesterId = 5,
+                            SubjectId = 10
                         });
                 });
 
@@ -4745,7 +4770,15 @@ namespace PRN232.LMS.Repositories.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PRN232.LMS.Repositories.Entities.Subject", "Subject")
+                        .WithMany("Courses")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Semester");
+
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("PRN232.LMS.Repositories.Entities.Enrollment", b =>
@@ -4780,6 +4813,11 @@ namespace PRN232.LMS.Repositories.Migrations
             modelBuilder.Entity("PRN232.LMS.Repositories.Entities.Student", b =>
                 {
                     b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("PRN232.LMS.Repositories.Entities.Subject", b =>
+                {
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

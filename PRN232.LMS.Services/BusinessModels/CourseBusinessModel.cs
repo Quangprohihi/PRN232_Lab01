@@ -6,7 +6,11 @@ public class CourseBusinessModel
 
     public string CourseName { get; set; } = string.Empty;
 
+    public int SubjectId { get; set; }
+
     public int SemesterId { get; set; }
+
+    public SubjectBusinessModel? Subject { get; set; }
 
     public SemesterBusinessModel? Semester { get; set; }
 }

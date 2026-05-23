@@ -12,6 +12,11 @@ public class Course
     [MaxLength(100)]
     public string CourseName { get; set; } = string.Empty;
 
+    public int SubjectId { get; set; }
+
+    [ForeignKey(nameof(SubjectId))]
+    public Subject? Subject { get; set; }
+
     public int SemesterId { get; set; }
 
     [ForeignKey(nameof(SemesterId))]

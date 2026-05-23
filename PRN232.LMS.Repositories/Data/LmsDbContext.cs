@@ -55,6 +55,7 @@ public class LmsDbContext : DbContext
             {
                 CourseId = i,
                 CourseName = $"Course {i}",
+                SubjectId = (i - 1) % 10 + 1,
                 SemesterId = (i - 1) % 5 + 1
             });
         }

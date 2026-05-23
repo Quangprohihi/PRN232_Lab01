@@ -144,6 +144,7 @@ public class EnrollmentsController : ControllerBase
         {
             CourseId = course.CourseId,
             CourseName = course.CourseName,
+            SubjectId = course.SubjectId,
             SemesterId = course.SemesterId
         };
     }
