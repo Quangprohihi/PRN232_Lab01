@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: prn232_postgres_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: LMS_Database
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: prn232_lms_api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+     
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=LMS_Database;Username=admin;Password=12345
+      - ASPNETCORE_ENVIRONMENT=Development 
+    restart: unless-stopped
+
+volumes:
+  pgdata:
