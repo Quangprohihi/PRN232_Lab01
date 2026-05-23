@@ -13,5 +13,6 @@ public class StudentRequestModel
     [MaxLength(100)]
     public string Email { get; set; } = string.Empty;
 
-    public DateTime DateOfBirth { get; set; }
+    [Required]
+    public DateOnly DateOfBirth { get; set; }
 }

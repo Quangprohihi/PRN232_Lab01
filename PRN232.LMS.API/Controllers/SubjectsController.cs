@@ -9,7 +9,7 @@ using PRN232.LMS.Services.Interfaces;
 namespace PRN232.LMS.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/subjects")]
 public class SubjectsController : ControllerBase
 {
     private readonly ISubjectService _subjectService;
@@ -19,7 +19,7 @@ public class SubjectsController : ControllerBase
             ["subjectId"] = subject => subject.SubjectId,
             ["subjectCode"] = subject => subject.SubjectCode,
             ["subjectName"] = subject => subject.SubjectName,
-            ["credit"] = subject => subject.Credit
+            ["credits"] = subject => subject.Credits
         };
 
     public SubjectsController(ISubjectService subjectService)
@@ -28,9 +28,9 @@ public class SubjectsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(PagedResponse<object>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResponse<List<SubjectResponseModel>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PagedResponse<object>>> GetSubjects(
+    public async Task<ActionResult<PagedResponse<List<SubjectResponseModel>>>> GetSubjects(
         [FromQuery] string? search,
         [FromQuery] string? sort,
         [FromQuery] int page = 1,
@@ -87,7 +87,7 @@ public class SubjectsController : ControllerBase
         {
             SubjectCode = request.SubjectCode,
             SubjectName = request.SubjectName,
-            Credit = request.Credit
+            Credits = request.Credits
         });
 
         return CreatedAtAction(
@@ -106,7 +106,7 @@ public class SubjectsController : ControllerBase
             SubjectId = subject.SubjectId,
             SubjectCode = subject.SubjectCode,
             SubjectName = subject.SubjectName,
-            Credit = subject.Credit
+            Credits = subject.Credits
         };
     }
 

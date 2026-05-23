@@ -60,7 +60,7 @@ public class SubjectService : ISubjectService
         {
             SubjectCode = subject.SubjectCode,
             SubjectName = subject.SubjectName,
-            Credit = subject.Credit
+            Credit = subject.Credits
         });
 
         return MapToBusinessModel(createdSubject);
@@ -89,7 +89,7 @@ public class SubjectService : ISubjectService
             "subjectCode" => sortDescending
                 ? query.OrderByDescending(subject => subject.SubjectCode)
                 : query.OrderBy(subject => subject.SubjectCode),
-            "credit" => sortDescending
+            "credits" => sortDescending
                 ? query.OrderByDescending(subject => subject.Credit)
                 : query.OrderBy(subject => subject.Credit),
             _ => sortDescending
@@ -113,7 +113,7 @@ public class SubjectService : ISubjectService
         {
             "subjectCode" => (sortBy, sortDescending),
             "subjectName" => (sortBy, sortDescending),
-            "credit" => (sortBy, sortDescending),
+            "credits" => (sortBy, sortDescending),
             _ => ("subjectName", false)
         };
     }
@@ -125,7 +125,7 @@ public class SubjectService : ISubjectService
             SubjectId = subject.SubjectId,
             SubjectCode = subject.SubjectCode,
             SubjectName = subject.SubjectName,
-            Credit = subject.Credit
+            Credits = subject.Credit
         };
     }
 }

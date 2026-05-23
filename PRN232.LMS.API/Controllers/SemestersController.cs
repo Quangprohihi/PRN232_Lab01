@@ -9,7 +9,7 @@ using PRN232.LMS.Services.Interfaces;
 namespace PRN232.LMS.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/semesters")]
 public class SemestersController : ControllerBase
 {
     private readonly ISemesterService _semesterService;
@@ -28,9 +28,9 @@ public class SemestersController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(PagedResponse<object>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResponse<List<SemesterResponseModel>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PagedResponse<object>>> GetSemesters(
+    public async Task<ActionResult<PagedResponse<List<SemesterResponseModel>>>> GetSemesters(
         [FromQuery] string? search,
         [FromQuery] string? sort,
         [FromQuery] int page = 1,
@@ -86,8 +86,8 @@ public class SemestersController : ControllerBase
         var createdSemester = await _semesterService.CreateSemesterAsync(new SemesterBusinessModel
         {
             SemesterName = request.SemesterName,
-            StartDate = request.StartDate,
-            EndDate = request.EndDate
+            StartDate = request.StartDate.ToDateTime(TimeOnly.MinValue),
+            EndDate = request.EndDate.ToDateTime(TimeOnly.MinValue)
         });
 
         return CreatedAtAction(
@@ -105,8 +105,8 @@ public class SemestersController : ControllerBase
         {
             SemesterId = semester.SemesterId,
             SemesterName = semester.SemesterName,
-            StartDate = semester.StartDate,
-            EndDate = semester.EndDate
+            StartDate = DateOnly.FromDateTime(semester.StartDate),
+            EndDate = DateOnly.FromDateTime(semester.EndDate)
         };
     }
 

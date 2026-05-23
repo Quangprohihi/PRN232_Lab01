@@ -8,7 +8,7 @@ public class EnrollmentBusinessModel
 
     public int CourseId { get; set; }
 
-    public DateTime EnrollDate { get; set; }
+    public DateTime EnrollmentDate { get; set; }
 
     public string Status { get; set; } = string.Empty;
 

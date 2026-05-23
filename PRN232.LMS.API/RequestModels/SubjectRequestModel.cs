@@ -12,5 +12,7 @@ public class SubjectRequestModel
     [MaxLength(100)]
     public string SubjectName { get; set; } = string.Empty;
 
-    public int Credit { get; set; }
+    [Required]
+    [Range(1, int.MaxValue)]
+    public int Credits { get; set; }
 }

@@ -8,7 +8,7 @@ public class EnrollmentResponseModel
 
     public int CourseId { get; set; }
 
-    public DateTime EnrollDate { get; set; }
+    public DateOnly EnrollmentDate { get; set; }
 
     public string Status { get; set; } = string.Empty;
 

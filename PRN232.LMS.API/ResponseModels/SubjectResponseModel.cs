@@ -8,5 +8,5 @@ public class SubjectResponseModel
 
     public string SubjectName { get; set; } = string.Empty;
 
-    public int Credit { get; set; }
+    public int Credits { get; set; }
 }

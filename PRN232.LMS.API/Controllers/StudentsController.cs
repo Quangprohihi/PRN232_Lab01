@@ -9,7 +9,7 @@ using PRN232.LMS.Services.Interfaces;
 namespace PRN232.LMS.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/students")]
 public class StudentsController : ControllerBase
 {
     private readonly IStudentService _studentService;
@@ -28,9 +28,9 @@ public class StudentsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(PagedResponse<object>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResponse<List<StudentResponseModel>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PagedResponse<object>>> GetStudents(
+    public async Task<ActionResult<PagedResponse<List<StudentResponseModel>>>> GetStudents(
         [FromQuery] string? search,
         [FromQuery] string? sort,
         [FromQuery] int page = 1,
@@ -88,7 +88,7 @@ public class StudentsController : ControllerBase
         {
             FullName = request.FullName,
             Email = request.Email,
-            DateOfBirth = request.DateOfBirth
+            DateOfBirth = request.DateOfBirth.ToDateTime(TimeOnly.MinValue)
         });
 
         return CreatedAtAction(
@@ -107,7 +107,7 @@ public class StudentsController : ControllerBase
             StudentId = student.StudentId,
             FullName = student.FullName,
             Email = student.Email,
-            DateOfBirth = student.DateOfBirth
+            DateOfBirth = DateOnly.FromDateTime(student.DateOfBirth)
         };
     }
 }

@@ -67,7 +67,7 @@ public class EnrollmentService : IEnrollmentService
         {
             StudentId = enrollment.StudentId,
             CourseId = enrollment.CourseId,
-            EnrollDate = enrollment.EnrollDate,
+            EnrollDate = enrollment.EnrollmentDate,
             Status = enrollment.Status
         });
 
@@ -112,7 +112,7 @@ public class EnrollmentService : IEnrollmentService
             "status" => sortDescending
                 ? query.OrderByDescending(enrollment => enrollment.Status)
                 : query.OrderBy(enrollment => enrollment.Status),
-            "enrollDate" => sortDescending
+            "enrollmentDate" => sortDescending
                 ? query.OrderByDescending(enrollment => enrollment.EnrollDate)
                 : query.OrderBy(enrollment => enrollment.EnrollDate),
             _ => sortDescending
@@ -135,7 +135,7 @@ public class EnrollmentService : IEnrollmentService
         return sortBy switch
         {
             "enrollmentId" => (sortBy, sortDescending),
-            "enrollDate" => (sortBy, sortDescending),
+            "enrollmentDate" => (sortBy, sortDescending),
             "status" => (sortBy, sortDescending),
             _ => ("enrollmentId", false)
         };
@@ -158,7 +158,7 @@ public class EnrollmentService : IEnrollmentService
             EnrollmentId = enrollment.EnrollmentId,
             StudentId = enrollment.StudentId,
             CourseId = enrollment.CourseId,
-            EnrollDate = enrollment.EnrollDate,
+            EnrollmentDate = enrollment.EnrollDate,
             Status = enrollment.Status,
             Student = expands.Contains("student") && enrollment.Student is not null
                 ? MapStudent(enrollment.Student)

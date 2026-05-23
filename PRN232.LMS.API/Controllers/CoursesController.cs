@@ -9,7 +9,7 @@ using PRN232.LMS.Services.Interfaces;
 namespace PRN232.LMS.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/courses")]
 public class CoursesController : ControllerBase
 {
     private readonly ICourseService _courseService;
@@ -30,9 +30,9 @@ public class CoursesController : ControllerBase
     
 
     [HttpGet]
-    [ProducesResponseType(typeof(PagedResponse<object>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResponse<List<CourseResponseModel>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PagedResponse<object>>> GetCourses(
+    public async Task<ActionResult<PagedResponse<List<CourseResponseModel>>>> GetCourses(
         [FromQuery] string? search,
         [FromQuery] string? sort,
         [FromQuery] int page = 1,
@@ -123,8 +123,8 @@ public class CoursesController : ControllerBase
         {
             SemesterId = semester.SemesterId,
             SemesterName = semester.SemesterName,
-            StartDate = semester.StartDate,
-            EndDate = semester.EndDate
+            StartDate = DateOnly.FromDateTime(semester.StartDate),
+            EndDate = DateOnly.FromDateTime(semester.EndDate)
         };
     }
 

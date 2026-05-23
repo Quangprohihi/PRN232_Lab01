@@ -8,5 +8,5 @@ public class StudentResponseModel
 
     public string Email { get; set; } = string.Empty;
 
-    public DateTime DateOfBirth { get; set; }
+    public DateOnly DateOfBirth { get; set; }
 }

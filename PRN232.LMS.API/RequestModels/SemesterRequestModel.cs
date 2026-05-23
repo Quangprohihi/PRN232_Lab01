@@ -8,7 +8,9 @@ public class SemesterRequestModel
     [MaxLength(100)]
     public string SemesterName { get; set; } = string.Empty;
 
-    public DateTime StartDate { get; set; }
+    [Required]
+    public DateOnly StartDate { get; set; }
 
-    public DateTime EndDate { get; set; }
+    [Required]
+    public DateOnly EndDate { get; set; }
 }

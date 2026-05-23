@@ -9,7 +9,7 @@ using PRN232.LMS.Services.Interfaces;
 namespace PRN232.LMS.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/enrollments")]
 public class EnrollmentsController : ControllerBase
 {
     private readonly IEnrollmentService _enrollmentService;
@@ -19,7 +19,7 @@ public class EnrollmentsController : ControllerBase
             ["enrollmentId"] = enrollment => enrollment.EnrollmentId,
             ["studentId"] = enrollment => enrollment.StudentId,
             ["courseId"] = enrollment => enrollment.CourseId,
-            ["enrollDate"] = enrollment => enrollment.EnrollDate,
+            ["enrollmentDate"] = enrollment => enrollment.EnrollmentDate,
             ["status"] = enrollment => enrollment.Status,
             ["student"] = enrollment => enrollment.Student,
             ["course"] = enrollment => enrollment.Course
@@ -31,9 +31,9 @@ public class EnrollmentsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(PagedResponse<object>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResponse<List<EnrollmentResponseModel>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PagedResponse<object>>> GetEnrollments(
+    public async Task<ActionResult<PagedResponse<List<EnrollmentResponseModel>>>> GetEnrollments(
         [FromQuery] string? search,
         [FromQuery] string? sort,
         [FromQuery] int page = 1,
@@ -100,7 +100,7 @@ public class EnrollmentsController : ControllerBase
         {
             StudentId = request.StudentId,
             CourseId = request.CourseId,
-            EnrollDate = request.EnrollDate,
+            EnrollmentDate = request.EnrollmentDate.ToDateTime(TimeOnly.MinValue),
             Status = request.Status
         });
 
@@ -120,7 +120,7 @@ public class EnrollmentsController : ControllerBase
             EnrollmentId = enrollment.EnrollmentId,
             StudentId = enrollment.StudentId,
             CourseId = enrollment.CourseId,
-            EnrollDate = enrollment.EnrollDate,
+            EnrollmentDate = DateOnly.FromDateTime(enrollment.EnrollmentDate),
             Status = enrollment.Status,
             Student = enrollment.Student is null ? null : MapStudent(enrollment.Student),
             Course = enrollment.Course is null ? null : MapCourse(enrollment.Course)
@@ -134,7 +134,7 @@ public class EnrollmentsController : ControllerBase
             StudentId = student.StudentId,
             FullName = student.FullName,
             Email = student.Email,
-            DateOfBirth = student.DateOfBirth
+            DateOfBirth = DateOnly.FromDateTime(student.DateOfBirth)
         };
     }
 
